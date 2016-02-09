@@ -80,14 +80,17 @@ class Base
 				{
 					$DeliveryPoint["name_parts"][] = $DeliveryPoint["organisation_name"];
 					$DeliveryPoint["address_lines"][$NextAddressLine][] = $DeliveryPoint["organisation_name"];
-					$NextAddressLine++;
-				}
-				
-				if(strlen($DeliveryPoint["department_name"]) > 0)
-				{
-					$DeliveryPoint["name_parts"][] = $DeliveryPoint["department_name"];
-					$DeliveryPoint["address_lines"][$NextAddressLine][] = $DeliveryPoint["department_name"];
-					$NextAddressLine++;
+					
+					if(strlen($DeliveryPoint["department_name"]) > 0)
+					{
+						$DeliveryPoint["name_parts"][] = $DeliveryPoint["department_name"];
+						$DeliveryPoint["address_lines"][$NextAddressLine][] = $DeliveryPoint["department_name"];
+						$NextAddressLine++;
+					}
+					else
+					{
+						$NextAddressLine++;
+					}
 				}
 				
 				if(strlen($DeliveryPoint["po_box_number"]) > 0)
