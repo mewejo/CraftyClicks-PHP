@@ -7,7 +7,8 @@ class Base
 	var $_API_Endpoint = "https://pcls1.craftyclicks.co.uk/json/";
 	var $_AccessToken = null;
 	var $_PATH = null;
-	var $_DebugEnable = false;
+	var $_DebugEnable_Generic = false;
+	var $_DebugEnable_Sorting = false;
 	
 	function __construct($AccessToken)
 	{
@@ -169,8 +170,8 @@ class Base
 		
 		usort($Response, function($a, $b)
 		{
-			$this->_Debug($a);
-			$this->_Debug($b);
+			$this->_Debug_Sorting($a);
+			$this->_Debug_Sorting($b);
 			
 			if((strlen($a["building_number"]) > 0) && (strlen($b["building_number"]) > 0))
 			{
@@ -178,20 +179,20 @@ class Base
 				{
 					if((strlen($a["building_name"]) > 0) && (strlen($b["building_name"]) < 1))
 					{
-						$this->_Debug("Line: " . __LINE__ . " = " . 1);
+						$this->_Debug_Sorting("Line: " . __LINE__ . " = " . 1);
 						return 1;
 					}
 					elseif((strlen($a["building_name"]) < 1) && (strlen($b["building_name"]) > 0))
 					{
-						$this->_Debug("Line: " . __LINE__ . " = " . -1);
+						$this->_Debug_Sorting("Line: " . __LINE__ . " = " . -1);
 						return -1;
 					}
 					
-					$this->_Debug("Line: " . __LINE__ . " = " . 0);
+					$this->_Debug_Sorting("Line: " . __LINE__ . " = " . 0);
 					return 0;
 				}
 				
-				$this->_Debug("Line: " . __LINE__ . " = " . (($a["building_number"] < $b["building_number"]) ? -1 : 1));
+				$this->_Debug_Sorting("Line: " . __LINE__ . " = " . (($a["building_number"] < $b["building_number"]) ? -1 : 1));
 				return ($a["building_number"] < $b["building_number"]) ? -1 : 1;
 			}
 			
@@ -209,33 +210,33 @@ class Base
 					
 					if((strlen($a["building_number"]) > 0) && (strlen($b["building_number"]) < 1))
 					{
-						$this->_Debug("Line: " . __LINE__ . " = " . -1);
+						$this->_Debug_Sorting("Line: " . __LINE__ . " = " . -1);
 						return -1;
 					}
 					elseif((strlen($a["building_number"]) < 1) && (strlen($b["building_number"]) > 0))
 					{
-						$this->_Debug("Line: " . __LINE__ . " = " . 1);
+						$this->_Debug_Sorting("Line: " . __LINE__ . " = " . 1);
 						return 1;
 					}
 					
-					$this->_Debug("Line: " . __LINE__ . " = " . 0);
+					$this->_Debug_Sorting("Line: " . __LINE__ . " = " . 0);
 					return 0;
 				}
-				$this->_Debug("Line: " . __LINE__ . " = " . (($a_numbers < $b_numbers) ? -1 : 1));
+				$this->_Debug_Sorting("Line: " . __LINE__ . " = " . (($a_numbers < $b_numbers) ? -1 : 1));
 				return ($a_numbers < $b_numbers) ? -1 : 1;
 			}
 			elseif($a_numbers && !$b_numbers)
 			{
-				$this->_Debug("Line: " . __LINE__ . " = " . -1);
+				$this->_Debug_Sorting("Line: " . __LINE__ . " = " . -1);
 				return -1;
 			}
 			elseif($b_numbers && !$a_numbers)
 			{
-				$this->_Debug("Line: " . __LINE__ . " = " . 1);
+				$this->_Debug_Sorting("Line: " . __LINE__ . " = " . 1);
 				return 1;
 			}
 			
-			$this->_Debug("Line: " . __LINE__ . " = " . strcmp($a["name_parts_concat"], $b["name_parts_concat"]));
+			$this->_Debug_Sorting("Line: " . __LINE__ . " = " . strcmp($a["name_parts_concat"], $b["name_parts_concat"]));
 			return strcmp($a["name_parts_concat"], $b["name_parts_concat"]);
 		});
 		
@@ -244,7 +245,12 @@ class Base
 	
 	function _Debug($Input)
 	{
-		if($this->_DebugEnable) echo "<textarea rows=\"20\" cols=\"50\">" . print_r($Input, true) . "</textarea>";
+		if($this->_DebugEnable_Generic) echo "<textarea rows=\"20\" cols=\"50\">" . print_r($Input, true) . "</textarea>";
+	}
+	
+	function _Debug_Sorting($Input)
+	{
+		if($this->_DebugEnable_Sorting) echo "<textarea rows=\"20\" cols=\"50\">" . print_r($Input, true) . "</textarea>";
 	}
 	
 	// Full Address (RapidAddress)
