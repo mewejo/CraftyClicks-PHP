@@ -70,7 +70,6 @@ class Base
 			foreach($Thoroughfare["delivery_points"] as $DeliveryPoint)
 			{
 				$DeliveryPoint["name_parts"] = array();
-				
 				$DeliveryPoint["address_lines"] = array();
 				$DeliveryPoint["address_lines"][1] = array();
 				
@@ -165,6 +164,8 @@ class Base
 				{
 					$LineItems = implode(" ", $LineItems);
 				}
+				
+				$DeliveryPoint["address_lines"]["country"] = "GB";
 				
 				// Add it in
 				$Response[] = $DeliveryPoint;
